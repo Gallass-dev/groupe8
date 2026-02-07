@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des Étudiants - Groupe 8</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: #333;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            color: white;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            width: 400px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background: #4facfe;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #00c6fb;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bienvenue sur la gestion des étudiants - Groupe 8</h1>
+
+    <div class="card">
+        <h2>Ajouter un étudiant</h2>
+        <form method="POST" action="/etudiants">
+            <input type="text" name="nom" placeholder="Nom" required>
+            <input type="number" name="age" placeholder="Âge" required>
+            <button type="submit">Ajouter</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Liste des étudiants</h2>
+        {% if etudiants %}
+            <ul>
+                {% for e in etudiants %}
+                    <li>{{ e.nom }} - {{ e.age }} ans</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Aucun étudiant ajouté pour l’instant.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
