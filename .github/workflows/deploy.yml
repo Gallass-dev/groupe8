@@ -20,10 +20,15 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H "${{ vars.EC2_HOST }}" >> ~/.ssh/known_hosts
 
-      - name: Copy project to EC2 (SCP)
+      #- name: Copy project to EC2 (SCP)
+       # run: |
+        #  scp -i ~/.ssh/id_rsa -r ./ \
+         # ${{ vars.EC2_USER }}@${{ vars.EC2_HOST }}:/home/ubuntu/${{ github.repository }}
+      - name: Copier le projet vers EC2 (rsync)
         run: |
-          scp -i ~/.ssh/id_rsa -r ./ \
-          ${{ vars.EC2_USER }}@${{ vars.EC2_HOST }}:/home/ubuntu/${{ github.repository }}
+             rsync -avz --exclude='.git' -e "ssh -i ~/.ssh/id_rsa" ./ \
+             ${{ vars.EC2_USER }}@${{ vars.EC2_HOST }}:/home/ubuntu/${{ github.repository }}
+
 
       - name: Install dependencies and run app
         run: |
